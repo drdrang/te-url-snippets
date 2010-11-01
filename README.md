@@ -36,7 +36,7 @@ This is an AppleScript snippet that prints the shortened URL of the frontmost ta
 
 This snippet was born out of frustration. I often put shortened URLs in parentheses in tweets, and I found myself—because TextExpander insisted on it—invoking `;surl` and then going back to put in the parentheses. This snippet made thing go much faster.
 
-This snippet was first described [here]4].
+This snippet was first described [here][4].
 
 ## flickr ##
 
