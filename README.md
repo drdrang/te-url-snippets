@@ -12,7 +12,7 @@ This is an AppleScript snippet that prints the URL of the frontmost tab of the f
 
 The original version of this snippet (written for [TypeIt4Me][6]) is described [here][3]. I carried it along when I switched to TextExpander, then generalized it to handle both Chrome and Safari [here][4].
 
-## 1url through 6url ##
+## 1url – 6url ##
 
 These are AppleScript snippets that print the URL of the *n*th tab, counting from the left, of the frontmost browser window. I use the abbreviations `;1url` through `;6url` to invoke them.
 
@@ -24,7 +24,7 @@ This is an AppleScript snippet that prints the shortened URL of the frontmost ta
 
 Like `;furl` this was first written for TypeIt4Me and described [here][3], then generalized to work with Chrome and Safari [here][4].
 
-## 1surl through 6surl ##
+## 1surl – 6surl ##
 
 These are AppleScript snippets that print the shortened URLs of the *n*th tab, counting from the left, of the frontmost browser window. It uses the [Metamark][10] shortening API, which requires special characters in the input URL to be encoded. The `escapeurl` script, included in the repository, is called by snippet to do the encoding. I use the abbreviations `;1surl` through `;6surl` to invoke them.
 
