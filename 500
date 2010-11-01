@@ -1,0 +1,51 @@
+#!/usr/bin/python
+
+from appscript import app, its, k
+import re
+import sys
+from urllib import urlopen
+
+# The basic URL format for photos.
+baseURL = 'http://www.flickr.com/photos/%s/%s/'
+
+# The regex for extracting user and photo info.
+infoRE = r'flickr\.com/photos/(.*)/(\d+)/?'
+
+# The various image URL suffixes.
+suffixes = {'master': '_m.jpg',
+            'original':    '_o_d.jpg',
+            'large':   '_b_d.jpg',
+            'medium640':   '_z_d.jpg',
+            'medium500':   '_d.jpg',
+            'small': '_m_d.jpg',
+            'thumbnail':   '_t_d.jpg',
+            'square':  '_s_d.jpg'}
+
+# Get the URL of the current page in either Safari or Chrome.
+numSafari = app('System Events').processes[its.name == 'Safari'].count(each=k.item)
+numChrome = app('System Events').processes[its.name == 'Google Chrome'].count(each=k.item)
+
+if numSafari > 0:
+  thisURL = app('Safari').documents[0].URL.get()
+elif numChrome > 0:
+  frontIndex = app('Google Chrome').windows[1].active_tab_index.get()
+  thisURL = app('Google Chrome').windows[1].tabs[frontIndex].URL.get()
+
+# Extract the user and photo info from the URL.
+info = re.findall(infoRE, thisURL)
+
+# Download the main page for that photo and get its "master URL."
+# Use the master to generate the URL for the medium500 image
+# and print it.
+try:
+  user = info[0][0]
+  id = info[0][1]
+  pageURL = baseURL % (user, id)
+  html = urlopen(pageURL).read()
+  imageURL = re.search(r'<link\s+rel="image_src"\s+href="([^"]+)"', html).group(1)
+  imageURL = imageURL.replace(suffixes['master'], suffixes['medium500'])
+  sys.stdout.write(imageURL)
+
+# Print an error message if there's any problem.
+except:
+  sys.stdout.write("wrongpagewrongpage")

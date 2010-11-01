@@ -1,0 +1,15 @@
+tell application "System Events"
+ set numSafari to count (every process whose name is "Safari")
+ set numChrome to count (every process whose name is "Google Chrome")
+end tell
+
+if numSafari > 0 then
+ tell application "Safari" to get URL of front document
+else
+ if numChrome > 0 then
+   tell application "Google Chrome"
+     set frontIndex to active tab index of front window
+     get URL of tab frontIndex of front window
+   end tell
+ end if
+end if

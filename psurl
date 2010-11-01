@@ -1,0 +1,22 @@
+tell application "System Events"
+ set numSafari to count (every process whose name is "Safari")
+ set numChrome to count (every process whose name is "Google Chrome")
+end tell
+
+if numSafari > 0 then
+ tell application "Safari" to set longURL to URL of front document
+else
+ if numChrome > 0 then
+   tell application "Google Chrome"
+     set frontIndex to active tab index of front window
+     set longURL to URL of tab frontIndex of front window
+   end tell
+   
+ end if
+end if
+
+set safeURL to do shell script "~/bin/escapeurl " & "'" & longURL & "'"
+set cmd to "curl 'http://metamark.net/api/rest/simple?long_url=" & safeURL & "'"
+set shortURL to do shell script cmd
+
+get "(" & shortURL & ")"

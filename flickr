@@ -1,0 +1,31 @@
+#!/usr/bin/python
+
+from appscript import app, its, k
+import re
+import sys
+
+def b58encode(n):
+  chars = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ'
+  basecount = len(chars)
+  b58 = []
+  while (n >= basecount):
+    (div, mod) = divmod(n, basecount)
+    b58.insert(0, chars[mod])
+    n = div
+  if (n > 0):
+    b58.insert(0, chars[n])
+  return ''.join(b58)
+
+numSafari = app('System Events').processes[its.name == 'Safari'].count(each=k.item)
+numChrome = app('System Events').processes[its.name == 'Google Chrome'].count(each=k.item)
+
+if numSafari > 0:
+  url = app('Safari').documents[0].URL.get()
+elif numChrome > 0:
+  frontIndex = app('Google Chrome').windows[1].active_tab_index.get()
+  url = app('Google Chrome').windows[1].tabs[frontIndex].URL.get()
+
+ids = re.findall(r'flickr\.com/photos/.*/(\d+)/?', url)
+
+shortflickr = 'http://flic.kr/p/%s' % b58encode(int(ids[0]))
+sys.stdout.write(shortflickr)
