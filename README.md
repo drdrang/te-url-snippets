@@ -50,6 +50,7 @@ This is a shell script snippet written in Python/appscript. It prints the URL of
 
 This snippet was first described [here][8], then improved to handle more Flickr pages [here][9].
 
+Note: The appscript library isn't part of the standard distribution, and you won't be able to use the Flickr snippets unless you install it, which will also require (I think) the installation of Apple's developer tools.
 
 
 [1]: http://appscript.sourceforge.net/index.html
